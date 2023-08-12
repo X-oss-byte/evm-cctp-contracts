@@ -11,8 +11,7 @@ def compute_address(sender, nonce):
     of the sender and the current nonce.
     """
     sender_as_bytes = Web3.toBytes(hexstr=sender)
-    contract_address = Web3.toHex(Web3.keccak(rlp.encode([sender_as_bytes, nonce])))[-40:]
-    return contract_address
+    return Web3.toHex(Web3.keccak(rlp.encode([sender_as_bytes, nonce])))[-40:]
 
 def precompute_remote_token_messenger_address(remote_rpc_url):
     """
@@ -20,7 +19,7 @@ def precompute_remote_token_messenger_address(remote_rpc_url):
     input remote_rpc_url and writes to the .env file. Requires 
     REMOTE_TOKEN_MESSENGER_DEPLOYER to be defined in the .env file.
     """
-    remote_token_messenger_deployer = os.getenv(f"REMOTE_TOKEN_MESSENGER_DEPLOYER")
+    remote_token_messenger_deployer = os.getenv("REMOTE_TOKEN_MESSENGER_DEPLOYER")
     remote_domain_node = Web3(Web3.HTTPProvider(remote_rpc_url))
 
     remote_token_messenger_deployer_nonce =  remote_domain_node.eth.get_transaction_count(remote_token_messenger_deployer)
